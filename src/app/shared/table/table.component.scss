@@ -1,5 +1,8 @@
 :host ::ng-deep {
-
+  .ngx-datatable.scroll-vertical .datatable-body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 
   .row-table {
     max-width: 100vw;
