@@ -1,0 +1,52 @@
+<div *ngIf="formName.invalid && formName.touched">
+  <small class="form-text text-danger" *ngIf="formName.errors?.required && this.checkSearch!=='search'">
+    {{'cần nhập vào ' + this.AttrValue  }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.minlength">
+    {{'validation.minLength' }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.maxlength">
+    {{'validation.maxLength'}}
+
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.max">
+    {{'validation.max' }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.pattern">
+    {{'validation.pattern'}}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.onlyNaturalNumber">
+    {{'validation.onlyNaturalNumber'}}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.onlyNumber">
+    {{'validation.onlyNumber'  }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.passwordMustMatchChange">
+    {{'validation.mustMatch'  }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.onlyDoubleNumber">
+    {{'validation.onlyDoubleNumber'  }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.onlyCharacter">
+    {{'validation.onlyCharacter'}}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.mustMatch">
+    {{'validation.mustMatch' }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.email">
+    {{'validation.email'}}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.existCheck">
+    {{'validation.existCheck'  }}
+  </small>
+  <small class="form-text text-danger" *ngIf="formName.errors?.isValidColor">
+    {{'validation.invalidColor'  }}
+  </small>
+
+
+</div>
+<div *ngIf="formName.invalid">
+  <small class="form-text text-danger" *ngIf="formName.errors?.mustSameUnit">
+    {{'validation.mustSameUnit'  }}
+  </small>
+</div>

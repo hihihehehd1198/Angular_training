@@ -1,0 +1,121 @@
+<div class="table-wrapper" #tableWrapper>
+  <ngx-datatable class="dark fullscreen" #table
+                 columnMode="flex"
+                 [rows]="account"
+                 [headerHeight]="100"
+                 [scrollbarV]="true"
+                 [rowHeight]="120"
+                 [footerHeight]="50"
+                 [columns]="columnsTable"
+                 [count]="this.page.totalElements"
+                 [offset]="this.page.pageNumber"
+                 [loadingIndicator]="isLoading"
+                 [reorderable]="false">
+    <ng-container class="row-table" *ngFor="let col of columnsTable">
+      <ngx-datatable-column prop="{{col.prop}}" name="{{col.name }}" [flexGrow]="col.flexGrow"
+                            [sortable]="false"
+
+
+                            [resizeable]="false"
+                            [draggable]="false"
+      >
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <ng-container [ngSwitch]="col.prop">
+            <ng-container *ngSwitchDefault>
+              {{ column.name  }}
+            </ng-container>
+            <!--                    <ng-container *ngSwitchCase="'ID'">-->
+            <!--                      <div class="text-center"><span class="w-100">{{ column.name }}</span></div>-->
+            <!--                    </ng-container>-->
+            <!--                    <ng-container *ngSwitchCase="'STATUS'">-->
+            <!--                      <div class="text-center"><span class="w-100">{{ column.name }}</span></div>-->
+            <!--                    </ng-container>-->
+            <ng-container *ngSwitchCase="'action'">
+              <div style="text-align: center"><span class="w-100">{{ column.name }}</span></div>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+
+        <!--                {name: 'Index', prop: 'stt', flexGrow: 0.5},-->
+        <!--                {name: 'Người dùng', prop: 'dbName', flexGrow: 0.9},-->
+        <!--                {name: 'Ip', prop: 'serviceName', flexGrow: 0.9},-->
+        <!--                {name: 'Server', prop: 'userName', flexGrow: 0.9},-->
+        <!--                {name: 'Port', prop: 'hostIp', flexGrow: 0.9},-->
+        <!--                {name: 'File', prop: 'port', flexGrow: 0.9},-->
+        <!--                {name: 'Trạng thái ', prop: 'status', flexGrow: 0.6},-->
+        <!--                {name: 'Action', prop: 'action', flexGrow: 0.8}-->
+
+
+        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <!--                <ng-template *ngFro-->
+          <ng-container [ngSwitch]="col.prop">
+            <!--                    <ng-container *ngSwitchCase="'id'">-->
+            <!--                      <div class="text-center">{{rowIndex + 1}}</div>-->
+            <!--                    </ng-container>-->
+            <div *ngSwitchDefault>
+              <span [title]="value"> {{ value ? value : 'N/A' }} </span>
+            </div>
+            <div *ngSwitchCase="'stt'">
+              <span [title]="value"> {{ rowIndex}} </span>
+            </div>
+            <div *ngSwitchCase="'firstname'" style="min-width: 300px">
+              <span [title]="value"> {{ row.firstname + ' ' + row.lastname}} </span>
+            </div>
+            <ng-container *ngSwitchCase="'action'">
+              <div
+                class="header-search-button">
+                <button nbButton
+                        status="danger" ghost
+
+                        (click)="openFormWithTable('details',row,addOrEdit)">
+                  DETAILS
+                </button>
+                <button class="edit"
+                        status="warning" nbButton ghost
+                        (click)="openFormWithTable('edit',row,addOrEdit)">
+                  Edit
+                </button>
+                <button nbButton
+                        status="danger" ghost
+
+                        (click)="this.deleteRow(row)">
+                  DELETE
+                </button>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </ngx-datatable-column>
+      <!--        <ngx-datatable-footer>-->
+      <!--          <ng-template-->
+      <!--            ngx-datatable-footer-template-->
+      <!--            let-rowCount="rowCount"-->
+      <!--            let-pageSize="pageSize"-->
+      <!--            let-selectedCount="selectedCount"-->
+      <!--            let-curPage="curPage"-->
+      <!--            let-offset="offset">-->
+      <!--            <div style="padding: 5px 10px;width:200px">-->
+      <!--              <div *ngIf="rowCount > 0">-->
+      <!--                        <span>{{'Hiển thị' }} {{(curPage - 1) * limit + 1}}-->
+      <!--                          - {{rowCount - curPage * limit >= 0 ? (curPage - 1) * limit + limit : rowCount}}-->
+      <!--                          /{{rowCount}} {{'bản ghi' }}</span>-->
+      <!--              </div>-->
+      <!--              <div *ngIf="rowCount === 0">-->
+      <!--                <span>0 {{'data-ingestion.label.record' }}</span>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--            <datatable-pager-->
+      <!--              [pagerLeftArrowIcon]="'datatable-icon-left'"-->
+      <!--              [pagerRightArrowIcon]="'datatable-icon-right'"-->
+      <!--              [page]="curPage"-->
+      <!--              [size]="pageSize"-->
+      <!--              [count]="rowCount"-->
+      <!--              [hidden]="!((rowCount / pageSize) > 1)"-->
+      <!--              (change)="table.onFooterPage($event)">-->
+      <!--            </datatable-pager>-->
+      <!--          </ng-template>-->
+      <!--        </ngx-datatable-footer>-->
+
+    </ng-container>
+  </ngx-datatable>
+</div>

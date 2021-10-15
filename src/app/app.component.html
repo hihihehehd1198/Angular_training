@@ -1,0 +1,373 @@
+<!--<div class="account-list">-->
+<!--  <button (click)="openAddAccount()">Add Account</button>-->
+<!--  <ng-container *ngIf="isOpenAddAccount">-->
+<!--    <div class="add-account">-->
+<!--      <button (click)="saveNew()">Save</button>-->
+<!--    </div>-->
+<!--  </ng-container>-->
+<!--  <ng-container *ngIf="isOpenEditAccount">-->
+<!--    <div class="add-account">-->
+<!--      <button (click)="saveEdit()">Save</button>-->
+<!--    </div>-->
+<!--  </ng-container>-->
+<!--  <div class="search">-->
+<!--    <input type="text" [(ngModel)]="searchStr" (ngModelChange)="search()">-->
+<!--  </div>-->
+<!--  <table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>Name</th>-->
+<!--      <th>Age</th>-->
+<!--      <th>Balance</th>-->
+<!--      <th>Thao tác</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr  *ngFor="let account of account; let index=index">-->
+<!--      <td>{{account.firstname}} {{account.lastname}}</td>-->
+<!--      <td>{{account.age}}</td>-->
+<!--      <td>{{account.balance}}</td>-->
+<!--      <td>-->
+<!--        <button (click)="openEdit(account)">Sửa</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+<nb-layout>
+  <nb-layout-column class="page-wrap"
+                    style=" padding-right: 0 !important;padding-left: 0 !important;padding-top: 15.6px !important;">
+    <nb-card>
+      <nb-card-header class="header-page">
+        <div class="header-title">
+          <h1>List User</h1>
+        </div>
+        <div class="header-search-button">
+          <input type="text" [(ngModel)]="textSearch" placeholder="search with text" (keyup.enter)="search();">
+          <button
+            (click)="openForm(addOrEdit,'search')">
+            Search chi tiết
+          </button>
+          <button
+            (click)="openForm(addOrEdit,'add')">
+            Add User
+          </button>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div style="margin-bottom: 50px">
+          <!--          <ngx-datatable class="dark fullscreen" #table-->
+          <!--                         [columnMode]="'force'"-->
+          <!--                         [limit]="limit"-->
+          <!--                         [rows]="account"-->
+          <!--                         [headerHeight]="100"-->
+
+          <!--                         [rowHeight]="100"-->
+          <!--                         [footerHeight]="50"-->
+          <!--                         [columns]="columnsTable"-->
+          <!--          >-->
+          <!--            <ng-container *ngFor="let col of columnsTable">-->
+          <!--              <ngx-datatable-column prop="{{col.prop}}" name="{{col.name }}" [flexGrow]="col.flexGrow"-->
+          <!--                                    [sortable]="false">-->
+          <!--                <ng-template let-column="column" ngx-datatable-header-template>-->
+          <!--                  <ng-container [ngSwitch]="col.prop">-->
+          <!--                    <ng-container *ngSwitchDefault>-->
+          <!--                      {{ column.name  }}-->
+          <!--                    </ng-container>-->
+          <!--                    &lt;!&ndash;                    <ng-container *ngSwitchCase="'ID'">&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                      <div class="text-center"><span class="w-100">{{ column.name }}</span></div>&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                    <ng-container *ngSwitchCase="'STATUS'">&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                      <div class="text-center"><span class="w-100">{{ column.name }}</span></div>&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
+          <!--                    <ng-container *ngSwitchCase="'action'">-->
+          <!--                      <div style="text-align: center"><span class="w-100">{{ column.name }}</span></div>-->
+          <!--                    </ng-container>-->
+          <!--                  </ng-container>-->
+          <!--                </ng-template>-->
+
+          <!--                &lt;!&ndash;                {name: 'Index', prop: 'stt', flexGrow: 0.5},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'Người dùng', prop: 'dbName', flexGrow: 0.9},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'Ip', prop: 'serviceName', flexGrow: 0.9},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'Server', prop: 'userName', flexGrow: 0.9},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'Port', prop: 'hostIp', flexGrow: 0.9},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'File', prop: 'port', flexGrow: 0.9},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'Trạng thái ', prop: 'status', flexGrow: 0.6},&ndash;&gt;-->
+          <!--                &lt;!&ndash;                {name: 'Action', prop: 'action', flexGrow: 0.8}&ndash;&gt;-->
+
+
+          <!--                <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>-->
+          <!--                  &lt;!&ndash;                <ng-template *ngFro&ndash;&gt;-->
+          <!--                  <ng-container [ngSwitch]="col.prop">-->
+          <!--                    &lt;!&ndash;                    <ng-container *ngSwitchCase="'id'">&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                      <div class="text-center">{{rowIndex + 1}}</div>&ndash;&gt;-->
+          <!--                    &lt;!&ndash;                    </ng-container>&ndash;&gt;-->
+          <!--                    <div *ngSwitchDefault>-->
+          <!--                      <span [title]="value"> {{ value ? value : 'N/A' }} </span>-->
+          <!--                    </div>-->
+          <!--                    <div *ngSwitchCase="'firstname'">-->
+          <!--                      <span [title]="value"> {{ row.firstname + ' ' + row.lastname}} </span>-->
+          <!--                    </div>-->
+          <!--                    <ng-container *ngSwitchCase="'action'">-->
+          <!--                      <div-->
+          <!--                        class="header-search-button">-->
+          <!--                        <button nbButton-->
+          <!--                                status="danger" ghost-->
+
+          <!--                                (click)="this.viewDetails(row);this.dialogService.open(addOrEdit, {context:{title: 'detail'},closeOnBackdropClick:false})">-->
+          <!--                          DETAILS-->
+          <!--                        </button>-->
+          <!--                        <button class="edit"-->
+          <!--                                status="warning" nbButton ghost-->
+          <!--                                (click)="GetValueEdit(row);this.dialogService.open(addOrEdit, {context:{title: 'edit'},closeOnBackdropClick:false})">-->
+          <!--                          Edit-->
+          <!--                        </button>-->
+          <!--                        <button nbButton-->
+          <!--                                status="danger" ghost-->
+
+          <!--                                (click)="this.deleteRow(row)">-->
+          <!--                          DELETE-->
+          <!--                        </button>-->
+          <!--                      </div>-->
+          <!--                    </ng-container>-->
+          <!--                  </ng-container>-->
+          <!--                </ng-template>-->
+          <!--              </ngx-datatable-column>-->
+          <!--              <ngx-datatable-footer>-->
+          <!--                <ng-template-->
+          <!--                  ngx-datatable-footer-template-->
+          <!--                  let-rowCount="rowCount"-->
+          <!--                  let-pageSize="pageSize"-->
+          <!--                  let-selectedCount="selectedCount"-->
+          <!--                  let-curPage="curPage"-->
+          <!--                  let-offset="offset">-->
+          <!--                  <div style="padding: 5px 10px;width:200px">-->
+          <!--                    <div *ngIf="rowCount > 0">-->
+          <!--                    <span>{{'Hiển thị' }} {{(curPage - 1) * limit + 1}}-->
+          <!--                      - {{rowCount - curPage * limit >= 0 ? (curPage - 1) * limit + limit : rowCount}}-->
+          <!--                      /{{rowCount}} {{'bản ghi' }}</span>-->
+          <!--                    </div>-->
+          <!--                    <div *ngIf="rowCount === 0">-->
+          <!--                      <span>0 {{'data-ingestion.label.record' }}</span>-->
+          <!--                    </div>-->
+          <!--                  </div>-->
+          <!--                  <datatable-pager-->
+          <!--                    [pagerLeftArrowIcon]="'datatable-icon-left'"-->
+          <!--                    [pagerRightArrowIcon]="'datatable-icon-right'"-->
+          <!--                    [page]="curPage"-->
+          <!--                    [size]="pageSize"-->
+          <!--                    [count]="rowCount"-->
+          <!--                    [hidden]="!((rowCount / pageSize) > 1)"-->
+          <!--                    (change)="table.onFooterPage($event)">-->
+          <!--                  </datatable-pager>-->
+          <!--                </ng-template>-->
+          <!--              </ngx-datatable-footer>-->
+          <!--            </ng-container>-->
+          <!--          </ngx-datatable>-->
+
+          <!--          @Input() account: any;-->
+          <!--          @Input() isOpenAddAccount: any;-->
+          <!--          @Input() isOpenEditAccount?: any;-->
+          <!--          @Input() selectedAccount?: any;-->
+          <!--          @Input() limit?: any;-->
+          <!--          @Input() rowData?: any;-->
+
+          <!--          @Input() columnsTable?: any;-->
+          <!--          @Input() FormGroupUser?: any;-->
+          <app-table [account]="account"
+                     [isOpenAddAccount]="isOpenAddAccount"
+                     [isOpenEditAccount]="isOpenEditAccount"
+                     [selectedAccount]="selectedAccount"
+                     [limit]="limit"
+                     [rowData]="rowData"
+                     [columnsTable]="columnsTable"
+                     [FormGroupUser]="FormGroupUser"
+                     [addOrEdit]="addOrEdit"
+                     (newItemEvent)="viewDetails($event)"
+                     (newItemEvent1)="GetValueEdit($event)"
+                     (newItemEvent2)="deleteRow($event)"
+                     (newItemEvent3)="openFormWithTable($event)"
+
+          >
+
+
+            <!--            viewDetails(row: any): void {-->
+            <!--            this.newItemEvent.emit(row);-->
+
+            <!--            }-->
+
+            <!--            GetValueEdit(row: any): void {-->
+            <!--            this.newItemEvent1.emit(row);-->
+            <!--            }-->
+
+            <!--            deleteRow(row: any): void {-->
+            <!--            this.newItemEvent2.emit(row);-->
+            <!--            }-->
+            <!--            }-->
+
+
+          </app-table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>
+
+
+<ng-template #addOrEdit let-data let-ref="dialogRef">
+  <nb-card class="edit-form">
+    <nb-card-header class="d-flex  justify-content-md-between">
+      <div class="header-item">
+        <span *ngIf="data.title === 'search'">Tìm kiếm</span>
+
+        <span *ngIf="data.title === 'add'">Thêm người dùng</span>
+        <span *ngIf="data.title === 'edit'">Chỉnh sửa thông tin  </span>
+        <span *ngIf="data.title === 'detail'">Xem chi tiết </span>
+        <button style="background: none; border: none; color: #8C95B2" size="small"
+                (click)="ref.close();this.FormGroupUser.enable()">
+          <nb-icon icon="close-outline"></nb-icon>
+        </button>
+      </div>
+
+
+    </nb-card-header>
+    <nb-card-body [formGroup]="FormGroupUser" style="overflow: visible">
+      <div class="form-group-column">
+        <div class="form-group">
+          <div><label for="firstname">first name:</label>
+            <input id="firstname" formControlName="firstname" type="text" class="form-control" name="firstname">
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'firstname'"
+
+
+                        [formName]="FormGroupUser.get('firstname')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="lastname">last name :</label>
+            <input id="lastname" formControlName="lastname" type="text" class="form-control" name="lastname">
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'lastname'"
+
+                        [formName]="FormGroupUser.get('lastname')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="age">age :</label>
+            <input type="number" class="form-control" formControlName="age" id="age" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'age'"
+                        [formName]="FormGroupUser.get('age')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="address">Address :</label>
+            <input type="text" class="form-control" formControlName="address" id="address" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'address'"
+                        [formName]="FormGroupUser.get('address')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="balance">balance :</label>
+            <input type="number" class="form-control" formControlName="balance" id="balance" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'balance'"
+
+                        [formName]="FormGroupUser.get('balance')"></app-validate>
+        </div>
+      </div>
+      <div class="form-group-column">
+        <div class="form-group">
+          <div><label for="email">email :</label>
+            <input type="text" class="form-control" formControlName="email" id="email" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'email'"
+
+                        [formName]="FormGroupUser.get('email')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="gender">gender :</label>
+            <!--            <input type="text" class="form-control" formControlName="gender" id="gender" required>-->
+            <nb-radio-group class="radio" name="gender" formControlName="gender" id="gender">
+              <nb-radio [value]="'M'" checked="true"><span>Male</span>
+              </nb-radio>
+              <nb-radio [value]="'F'"><span>Female</span></nb-radio>
+            </nb-radio-group>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'gender'"
+
+                        [formName]="FormGroupUser.get('gender')"></app-validate>
+
+        </div>
+        <div class="form-group">
+          <div><label for="employer">employer :</label>
+            <input type="text" class="form-control" formControlName="employer" id="employer" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'employer'"
+
+
+                        [formName]="FormGroupUser.get('employer')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="state">state :</label>
+            <input type="text" class="form-control" formControlName="state" id="state" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'state'"
+
+
+                        [formName]="FormGroupUser.get('state')"></app-validate>
+        </div>
+        <div class="form-group">
+          <div><label for="city">city :</label>
+            <input type="text" class="form-control" formControlName="city" id="city" required>
+          </div>
+          <app-validate [message]="'Table space'"
+                        [checkSearch]="data.title"
+                        [AttrValue]="'city'"
+
+
+                        [formName]="FormGroupUser.get('city')"></app-validate>
+
+        </div>
+      </div>
+      <!--      <button (click)="this.editRow()">Add</button>-->
+
+      <!--      <div class="form-group">-->
+      <!--        <button type="submit" [disabled]="!FormGroupUser.valid" class="btn btn-success">Submit</button>-->
+      <!--      </div>-->
+
+    </nb-card-body>
+    <nb-card-footer class="footer-popup d-flex edit-button justify-content-center align-items-center">
+      <button *ngIf="data.title ==='search'" (click)="ActionForm(data.title,ref)" class="mr-2">
+        Tìm kiếm
+      </button>
+      <button *ngIf="data.title ==='add'" (click)="ActionForm(data.title,ref)" class="mr-2">
+        Thêm user
+      </button>
+      <button *ngIf="data.title ==='edit'" (click)="ActionForm(data.title,ref)" class="mr-2">
+        xác nhận thay đổi
+      </button>
+      <button class="edit-button-cancel" (click)="closeForm(ref)">
+        Đóng
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+
